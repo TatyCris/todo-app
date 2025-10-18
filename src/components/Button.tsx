@@ -1,4 +1,9 @@
-export default function Button({ buttonType, children }) {
+type Props = {
+	buttonType?: "primary" | "secondary";
+	children: React.ReactNode;
+};
+
+export default function Button({ buttonType, children }: Props) {
 	return (
 		<button
 			type="submit"

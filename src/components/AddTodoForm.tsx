@@ -1,7 +1,11 @@
 import { useState } from "react";
 import Button from "./Button";
 
-export default function AddTodoForm({ handleAddTodo }) {
+type Props = {
+	handleAddTodo: (todoText: string) => void;
+};
+
+export default function AddTodoForm({ handleAddTodo }: Props) {
 	const [todoText, setTodoText] = useState("");
 
 	return (

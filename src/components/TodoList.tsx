@@ -1,10 +1,17 @@
+import type { Todo } from "../App";
 import DeleteButton from "./DeleteButton";
+
+type Props = {
+	todos: Todo[];
+	handleToggleTodo: (id: number) => void;
+	handleDeleteTodo: (id: number) => void;
+};
 
 export default function TodoList({
 	todos,
 	handleToggleTodo,
 	handleDeleteTodo,
-}) {
+}: Props) {
 	return (
 		<ul>
 			{todos.length === 0 && (
