@@ -1,20 +1,9 @@
-import { createContext, useState } from "react";
+import { useState } from "react";
 import type { Todo } from "../lib/types";
-
+import { TodosContext, type TTodosContext } from "../contexts/TodosContext";
 type Props = {
 	children: React.ReactNode;
 };
-
-type TTodosContext = {
-	todos: Todo[];
-	totalTodos: number;
-	countCompletedTodos: number;
-	handleAddTodo: (todoText: string) => void;
-	handleToggleTodo: (id: number) => void;
-	handleDeleteTodo: (id: number) => void;
-};
-
-export const TodosContext = createContext<TTodosContext | null>(null);
 
 export default function TodosContextProvider({ children }: Props) {
 	const [todos, setTodos] = useState<Todo[]>([]);
@@ -49,18 +38,16 @@ export default function TodosContextProvider({ children }: Props) {
 		setTodos((prev) => prev.filter((todo) => todo.id !== id));
 	};
 
+	const value: TTodosContext = {
+		todos,
+		totalTodos,
+		countCompletedTodos,
+		handleAddTodo,
+		handleToggleTodo,
+		handleDeleteTodo,
+	};
+
 	return (
-		<TodosContext.Provider
-			value={{
-				todos,
-				totalTodos,
-				countCompletedTodos,
-				handleAddTodo,
-				handleToggleTodo,
-				handleDeleteTodo,
-			}}
-		>
-			{children}
-		</TodosContext.Provider>
+		<TodosContext.Provider value={value}>{children}</TodosContext.Provider>
 	);
 }
