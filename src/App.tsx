@@ -31,7 +31,7 @@ function App() {
 			<main className="relative w-[972px] shadow-[0_4px_4px_rgb(0,0,0,0.08)] h-[636px] bg-[#fff] rounded-[8px] grid grid-cols-[7fr_4fr] grid-rows-[59px_1fr] overflow-hidden">
 				<Header todos={todos} setTodos={setTodos} />
 				<TodoList todos={todos} setTodos={setTodos} />
-				<Sidebar />
+				<Sidebar todos={todos} setTodos={setTodos} />
 			</main>
 			<Footer />
 		</div>
