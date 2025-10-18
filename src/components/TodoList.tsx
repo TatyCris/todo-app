@@ -1,4 +1,4 @@
-import type { Todo } from "../App";
+import type { Todo } from "../lib/types";
 import DeleteButton from "./DeleteButton";
 
 type Props = {

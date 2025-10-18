@@ -4,12 +4,7 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import TodoList from "./components/TodoList";
-
-export type Todo = {
-	id: number;
-	text: string;
-	completed: boolean;
-};
+import type { Todo } from "./lib/types";
 
 function App() {
 	const [todos, setTodos] = useState<Todo[]>([]);
