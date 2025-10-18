@@ -1,6 +1,10 @@
 import DeleteButton from "./DeleteButton";
 
-export default function TodoList({ todos, setTodos }) {
+export default function TodoList({
+	todos,
+	handleToggleTodo,
+	handleDeleteTodo,
+}) {
 	return (
 		<ul>
 			{todos.length === 0 && (
@@ -12,20 +16,14 @@ export default function TodoList({ todos, setTodos }) {
 				<li
 					key={todo.id}
 					className="flex justify-between items-center border-b border-black/[8%] h-[50px] px-8 cursor-pointer"
-					onClick={() => {
-						setTodos(
-							todos.map((t) =>
-								t.id === todo.id ? { ...t, completed: !t.completed } : t
-							)
-						);
-					}}
+					onClick={() => handleToggleTodo(todo.id)}
 				>
 					<span
 						className={`${todo.completed ? "line-through text-[#ccc]" : ""}`}
 					>
 						{todo.text}
 					</span>
-					<DeleteButton id={todo.id} setTodos={setTodos} />
+					<DeleteButton id={todo.id} handleDeleteTodo={handleDeleteTodo} />
 				</li>
 			))}
 		</ul>
