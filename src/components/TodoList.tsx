@@ -1,17 +1,12 @@
-import type { Todo } from "../lib/types";
+import { useContext } from "react";
+import { TodosContext } from "../contexts/TodosContextProvider";
 import DeleteButton from "./DeleteButton";
 
-type Props = {
-	todos: Todo[];
-	handleToggleTodo: (id: number) => void;
-	handleDeleteTodo: (id: number) => void;
-};
+export default function TodoList() {
+	const context = useContext(TodosContext);
+	if (!context) return null;
+	const { todos, handleToggleTodo, handleDeleteTodo } = context;
 
-export default function TodoList({
-	todos,
-	handleToggleTodo,
-	handleDeleteTodo,
-}: Props) {
 	return (
 		<ul>
 			{todos.length === 0 && (
@@ -30,7 +25,7 @@ export default function TodoList({
 					>
 						{todo.text}
 					</span>
-					<DeleteButton id={todo.id} handleDeleteTodo={handleDeleteTodo} />
+					<DeleteButton id={todo.id} onDeleteTodo={handleDeleteTodo} />
 				</li>
 			))}
 		</ul>

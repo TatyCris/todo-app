@@ -1,14 +1,14 @@
 type Props = {
 	id: number;
-	handleDeleteTodo: (id: number) => void;
+	onDeleteTodo: (id: number) => void;
 };
 
-export default function DeleteButton({ id, handleDeleteTodo }: Props) {
+export default function DeleteButton({ id, onDeleteTodo }: Props) {
 	return (
 		<button
 			onClick={(e) => {
 				e.stopPropagation();
-				handleDeleteTodo(id);
+				onDeleteTodo(id);
 			}}
 		>
 			❌

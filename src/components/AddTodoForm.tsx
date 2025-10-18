@@ -1,12 +1,14 @@
 import { useState } from "react";
 import Button from "./Button";
+import { TodosContext } from "../contexts/TodosContextProvider";
+import { useContext } from "react";
 
-type Props = {
-	handleAddTodo: (todoText: string) => void;
-};
-
-export default function AddTodoForm({ handleAddTodo }: Props) {
+export default function AddTodoForm() {
 	const [todoText, setTodoText] = useState("");
+
+	const context = useContext(TodosContext);
+	if (!context) return null;
+	const { handleAddTodo } = context;
 
 	return (
 		<form
