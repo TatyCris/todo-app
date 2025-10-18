@@ -6,23 +6,7 @@ import Sidebar from "./components/Sidebar";
 import TodoList from "./components/TodoList";
 
 function App() {
-	const [todos, setTodos] = useState([
-		{
-			id: 1,
-			text: "buy groceries",
-			completed: false,
-		},
-		{
-			id: 2,
-			text: "walk the dog",
-			completed: true,
-		},
-		{
-			id: 3,
-			text: "do laudry",
-			completed: false,
-		},
-	]);
+	const [todos, setTodos] = useState([]);
 
 	return (
 		<div className="flex justify-center items-center font-sans bg-[#f1d4b3] h-dvh flex-col">
