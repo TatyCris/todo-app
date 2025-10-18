@@ -1,10 +1,7 @@
-import { useContext } from "react";
-import { TodosContext } from "../contexts/TodosContextProvider";
+import { useTodosContext } from "../lib/hooks";
 
 export default function Counter() {
-	const context = useContext(TodosContext);
-	if (!context) return null;
-	const { countCompletedTodos, totalTodos } = context;
+	const { countCompletedTodos, totalTodos } = useTodosContext();
 
 	return (
 		<p>
