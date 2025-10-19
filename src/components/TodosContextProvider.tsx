@@ -5,9 +5,18 @@ type Props = {
 	children: React.ReactNode;
 };
 
+const getInitialTodos = () => {
+	const storedTodos = localStorage.getItem("todos");
+	if (storedTodos) {
+		return JSON.parse(storedTodos);
+	} else {
+		return [];
+	}
+};
+
 export default function TodosContextProvider({ children }: Props) {
 	// state
-	const [todos, setTodos] = useState<Todo[]>([]);
+	const [todos, setTodos] = useState<Todo[]>(getInitialTodos);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string | null>(null);
 
@@ -44,25 +53,30 @@ export default function TodosContextProvider({ children }: Props) {
 	};
 
 	// side effects
-	useEffect(() => {
-		const fetchTodos = async () => {
-			setLoading(true);
-			try {
-				const response = await fetch(
-					"https://bytegrad.com/course-assets/api/todos"
-				);
-				const data = await response.json();
-				setTodos(data);
-			} catch (error) {
-				console.error("Error fetching todos:", error);
-				setError("Failed to fetch todos.");
-			} finally {
-				setLoading(false);
-			}
-		};
-		fetchTodos();
-	}, []);
+	// useEffect(() => {
+	// 	const fetchTodos = async () => {
+	// 		setLoading(true);
+	// 		try {
+	// 			const response = await fetch(
+	// 				"https://bytegrad.com/course-assets/api/todos"
+	// 			);
+	// 			const data = await response.json();
+	// 			setTodos(data);
+	// 		} catch (error) {
+	// 			console.error("Error fetching todos:", error);
+	// 			setError("Failed to fetch todos.");
+	// 		} finally {
+	// 			setLoading(false);
+	// 		}
+	// 	};
+	// 	fetchTodos();
+	// }, []);
 
+	useEffect(() => {
+		localStorage.setItem("todos", JSON.stringify(todos));
+	}, [todos]);
+
+	// context value
 	const value: TTodosContext = {
 		loading,
 		error,
