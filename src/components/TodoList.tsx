@@ -1,8 +1,18 @@
 import { useTodosContext } from "../lib/hooks";
 import DeleteButton from "./DeleteButton";
+import LoadingDots from "./LoadingDots";
 
 export default function TodoList() {
-	const { todos, handleToggleTodo, handleDeleteTodo } = useTodosContext();
+	const { loading, error, todos, handleToggleTodo, handleDeleteTodo } =
+		useTodosContext();
+
+	if (loading) {
+		return <LoadingDots />;
+	}
+
+	if (error) {
+		return <p className="text-red-500">Error: {error}</p>;
+	}
 
 	return (
 		<ul>

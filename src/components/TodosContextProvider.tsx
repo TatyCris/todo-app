@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Todo } from "../lib/types";
 import { TodosContext, type TTodosContext } from "../contexts/TodosContext";
 type Props = {
@@ -6,14 +6,19 @@ type Props = {
 };
 
 export default function TodosContextProvider({ children }: Props) {
+	// state
 	const [todos, setTodos] = useState<Todo[]>([]);
+	const [loading, setLoading] = useState<boolean>(false);
+	const [error, setError] = useState<string | null>(null);
 
+	// derived state
 	const totalTodos = todos.length;
 	const countCompletedTodos = todos.filter((todo) => todo.completed).length;
 
+	// event handlers / actions
 	const handleAddTodo = (todoText: string) => {
-		if (todos.length >= 3) {
-			alert("You can only have up to 3 todos.");
+		if (todos.length >= 5) {
+			alert("You can only have up to 5 todos.");
 		} else {
 			setTodos((prev) => [
 				...prev,
@@ -38,7 +43,29 @@ export default function TodosContextProvider({ children }: Props) {
 		setTodos((prev) => prev.filter((todo) => todo.id !== id));
 	};
 
+	// side effects
+	useEffect(() => {
+		const fetchTodos = async () => {
+			setLoading(true);
+			try {
+				const response = await fetch(
+					"https://bytegrad.com/course-assets/api/todos"
+				);
+				const data = await response.json();
+				setTodos(data);
+			} catch (error) {
+				console.error("Error fetching todos:", error);
+				setError("Failed to fetch todos.");
+			} finally {
+				setLoading(false);
+			}
+		};
+		fetchTodos();
+	}, []);
+
 	const value: TTodosContext = {
+		loading,
+		error,
 		todos,
 		totalTodos,
 		countCompletedTodos,
