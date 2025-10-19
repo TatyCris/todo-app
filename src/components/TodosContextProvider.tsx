@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import type { Todo } from "../lib/types";
 import { TodosContext, type TTodosContext } from "../contexts/TodosContext";
+import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
+
 type Props = {
 	children: React.ReactNode;
 };
@@ -15,6 +17,8 @@ const getInitialTodos = () => {
 };
 
 export default function TodosContextProvider({ children }: Props) {
+	const { isAuthenticated } = useKindeAuth();
+
 	// state
 	const [todos, setTodos] = useState<Todo[]>(getInitialTodos);
 	const [loading, setLoading] = useState<boolean>(false);
@@ -26,7 +30,7 @@ export default function TodosContextProvider({ children }: Props) {
 
 	// event handlers / actions
 	const handleAddTodo = (todoText: string) => {
-		if (todos.length >= 5) {
+		if (todos.length >= 5 && !isAuthenticated) {
 			alert("You can only have up to 5 todos.");
 		} else {
 			setTodos((prev) => [

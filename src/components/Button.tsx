@@ -1,15 +1,17 @@
 type Props = {
 	buttonType?: "primary" | "secondary";
+	onClick?: () => Promise<void>;
 	children: React.ReactNode;
 };
 
-export default function Button({ buttonType, children }: Props) {
+export default function Button({ buttonType, onClick, children }: Props) {
 	return (
 		<button
 			type="submit"
 			className={`h-[45px] bg-[#473a2b] hover:bg-[#322618] w-full text-white rounded-[5px] cursor-pointer ${
 				buttonType === "secondary" ? "opacity-[85%]" : ""
 			}`}
+			onClick={onClick}
 		>
 			{children}
 		</button>
